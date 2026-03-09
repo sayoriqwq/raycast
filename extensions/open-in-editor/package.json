@@ -33,6 +33,27 @@
       "description": "Open current Finder directory or selected items in Antigravity",
       "mode": "no-view",
       "icon": "antigravity.png"
+    },
+    {
+      "name": "open-in-codex",
+      "title": "Open in Codex",
+      "description": "Open current Finder directory or selected items in Codex",
+      "mode": "no-view",
+      "icon": "codex.png"
+    },
+    {
+      "name": "open-in-aionui",
+      "title": "Open in AionUI",
+      "description": "Open current Finder directory or selected items in AionUI",
+      "mode": "no-view",
+      "icon": "aionui.png"
+    },
+    {
+      "name": "open-in-opencode",
+      "title": "Open in OpenCode",
+      "description": "Open current Finder directory or selected items in OpenCode",
+      "mode": "no-view",
+      "icon": "opencode.png"
     }
   ],
   "platforms": ["macOS"],

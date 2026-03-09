@@ -1,0 +1,38 @@
+{
+  "name": "terminal-finder",
+  "title": "Terminal Finder",
+  "description": "Navigate between Finder and WezTerm",
+  "icon": "icon.png",
+  "author": "sayori",
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "finder-to-wezterm",
+      "title": "Finder → WezTerm",
+      "description": "Open current Finder directory in WezTerm",
+      "mode": "no-view",
+      "icon": "wezterm.png"
+    },
+    {
+      "name": "wezterm-to-finder",
+      "title": "WezTerm → Finder",
+      "description": "Open current WezTerm directory in Finder",
+      "mode": "no-view",
+      "icon": "wezterm.png"
+    }
+  ],
+  "platforms": ["macOS"],
+  "dependencies": {
+    "@raycast/api": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "^19.2.14",
+    "typescript": "latest"
+  },
+  "scripts": {
+    "dev": "ray develop",
+    "build": "ray build -e dev -o .ray-build && cp .ray-build/finder-to-wezterm.js .ray-build/wezterm-to-finder.js .",
+    "lint": "ray lint"
+  }
+}
