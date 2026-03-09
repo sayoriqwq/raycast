@@ -1,0 +1,54 @@
+{
+  "name": "open-in-editor",
+  "title": "Open in Editor",
+  "description": "Open Finder selection or current window in your preferred IDE",
+  "icon": "icon.png",
+  "author": "sayori",
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "open-in-vscode",
+      "title": "Open in VSCode",
+      "description": "Open current Finder directory or selected items in Visual Studio Code",
+      "mode": "no-view",
+      "icon": "vscode.png"
+    },
+    {
+      "name": "open-in-zed",
+      "title": "Open in Zed",
+      "description": "Open current Finder directory or selected items in Zed",
+      "mode": "no-view",
+      "icon": "zed.png"
+    },
+    {
+      "name": "open-in-kiro",
+      "title": "Open in Kiro",
+      "description": "Open current Finder directory or selected items in Kiro",
+      "mode": "no-view",
+      "icon": "kiro.png"
+    },
+    {
+      "name": "open-in-antigravity",
+      "title": "Open in Antigravity",
+      "description": "Open current Finder directory or selected items in Antigravity",
+      "mode": "no-view",
+      "icon": "antigravity.png"
+    }
+  ],
+  "platforms": [
+    "macOS"
+  ],
+  "dependencies": {
+    "@raycast/api": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "^19.2.14",
+    "typescript": "latest"
+  },
+  "scripts": {
+    "dev": "ray develop",
+    "build": "ray build -e dev -o .ray-build && cp .ray-build/open-in-*.js .",
+    "lint": "ray lint"
+  }
+}
