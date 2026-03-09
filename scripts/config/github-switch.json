@@ -1,0 +1,4 @@
+{
+  "targetList": ["github.com", "gist.github.com", "github.dev"],
+  "defaultURL": "https://github.com"
+}

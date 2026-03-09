@@ -1,0 +1,4 @@
+{
+  "targetList": ["chatgpt.com", "chat.openai.com"],
+  "defaultURL": "https://chatgpt.com"
+}
