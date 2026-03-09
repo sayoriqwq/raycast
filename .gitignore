@@ -1,2 +1,4 @@
 .DS_Store
 node_modules
+extensions/counter/.ray-build
+extensions/counter/dist

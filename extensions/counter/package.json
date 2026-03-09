@@ -2,29 +2,57 @@
   "name": "counter",
   "title": "Counter",
   "description": "Generic event counter with daily summary and audit logs",
-  "icon": "assets/icon.png",
+  "icon": "icon.png",
   "author": "sayori",
   "license": "MIT",
   "commands": [
     {
       "name": "increment-counter",
-      "title": "Increment Counter",
-      "description": "Increment a named counter and write daily summary + audit log",
+      "title": "Record Counter Event",
+      "description": "Record an event to the configured counter target",
       "mode": "no-view",
       "arguments": [
         {
-          "name": "name",
-          "placeholder": "Counter name, e.g. qq",
+          "name": "target",
+          "placeholder": "Target key/name, e.g. qq",
           "type": "text",
-          "required": true
+          "required": false
         }
       ]
+    }
+  ],
+  "preferences": [
+    {
+      "name": "defaultCounter",
+      "type": "textfield",
+      "required": false,
+      "title": "Default Counter",
+      "description": "Used when command argument is empty",
+      "placeholder": "qq"
     },
     {
-      "name": "increment-qq",
-      "title": "Increment QQ Counter",
-      "description": "Increment the qq counter and write daily summary + audit log",
-      "mode": "no-view"
+      "name": "counterAliases",
+      "type": "textfield",
+      "required": false,
+      "title": "Counter Aliases",
+      "description": "Format: alias=counter, alias2=counter2",
+      "placeholder": "qq=qq,wechat=wechat"
+    },
+    {
+      "name": "dataDirectory",
+      "type": "textfield",
+      "required": false,
+      "title": "Data Directory",
+      "description": "Storage path for daily and audit logs",
+      "default": "/Users/sayori/.config/raycast/data/counter"
+    },
+    {
+      "name": "timeZone",
+      "type": "textfield",
+      "required": false,
+      "title": "Time Zone",
+      "description": "IANA time zone, e.g. Asia/Shanghai",
+      "default": "Asia/Shanghai"
     }
   ],
   "dependencies": {
@@ -32,11 +60,13 @@
   },
   "devDependencies": {
     "@types/node": "latest",
+    "@types/react": "^19.2.14",
     "typescript": "latest"
   },
   "scripts": {
     "dev": "ray develop",
-    "build": "ray build -e dist",
+    "build": "ray build -e dev -o .ray-build && cp .ray-build/increment-counter.js .",
+    "build:dist": "ray build -e dist -o dist",
     "lint": "ray lint"
   }
 }

@@ -10,11 +10,14 @@ importers:
     dependencies:
       '@raycast/api':
         specifier: latest
-        version: 1.104.8(@types/node@25.3.5)
+        version: 1.104.8(@types/node@25.3.5)(@types/react@19.2.14)
     devDependencies:
       '@types/node':
         specifier: latest
         version: 25.3.5
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.14
       typescript:
         specifier: latest
         version: 5.9.3
@@ -346,6 +349,9 @@ packages:
   '@types/node@25.3.5':
     resolution: {integrity: sha512-oX8xrhvpiyRCQkG1MFchB09f+cXftgIXb3a7UUa4Y3wpmZPw5tyZGTLWhlESOLq1Rq6oDlc8npVU2/9xiCuXMA==}
 
+  '@types/react@19.2.14':
+    resolution: {integrity: sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==}
+
   ansi-escapes@4.3.2:
     resolution: {integrity: sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==}
     engines: {node: '>=8'}
@@ -400,6 +406,9 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
+
+  csstype@3.2.3:
+    resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -817,7 +826,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@raycast/api@1.104.8(@types/node@25.3.5)':
+  '@raycast/api@1.104.8(@types/node@25.3.5)(@types/react@19.2.14)':
     dependencies:
       '@oclif/core': 4.8.3
       '@oclif/plugin-autocomplete': 3.2.40
@@ -827,12 +836,17 @@ snapshots:
       react: 19.0.0
     optionalDependencies:
       '@types/node': 25.3.5
+      '@types/react': 19.2.14
     transitivePeerDependencies:
       - supports-color
 
   '@types/node@25.3.5':
     dependencies:
       undici-types: 7.18.2
+
+  '@types/react@19.2.14':
+    dependencies:
+      csstype: 3.2.3
 
   ansi-escapes@4.3.2:
     dependencies:
@@ -875,6 +889,8 @@ snapshots:
       color-name: 1.1.4
 
   color-name@1.1.4: {}
+
+  csstype@3.2.3: {}
 
   debug@4.4.3(supports-color@8.1.1):
     dependencies:
