@@ -1,7 +1,7 @@
 {
   "name": "terminal-finder",
   "title": "Terminal Finder",
-  "description": "Navigate between Finder and WezTerm",
+  "description": "Navigate between Finder and WezTerm or Ghostty",
   "icon": "icon.png",
   "author": "sayori",
   "license": "MIT",
@@ -14,11 +14,25 @@
       "icon": "wezterm.png"
     },
     {
+      "name": "finder-to-ghostty",
+      "title": "Finder → Ghostty",
+      "description": "Open current Finder directory in Ghostty",
+      "mode": "no-view",
+      "icon": "ghostty.png"
+    },
+    {
       "name": "wezterm-to-finder",
       "title": "WezTerm → Finder",
       "description": "Open current WezTerm directory in Finder",
       "mode": "no-view",
       "icon": "wezterm.png"
+    },
+    {
+      "name": "ghostty-to-finder",
+      "title": "Ghostty → Finder",
+      "description": "Open current Ghostty directory in Finder",
+      "mode": "no-view",
+      "icon": "ghostty.png"
     }
   ],
   "platforms": [
@@ -34,7 +48,7 @@
   },
   "scripts": {
     "dev": "ray develop",
-    "build": "ray build -e dev -o .ray-build && cp .ray-build/finder-to-wezterm.js .ray-build/wezterm-to-finder.js .",
+    "build": "ray build -e dev -o .ray-build && cp .ray-build/finder-to-wezterm.js .ray-build/wezterm-to-finder.js .ray-build/finder-to-ghostty.js .ray-build/ghostty-to-finder.js .",
     "lint": "ray lint"
   }
 }

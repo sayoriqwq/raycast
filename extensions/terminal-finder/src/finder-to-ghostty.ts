@@ -1,6 +1,6 @@
-import { open, showToast, Toast } from "@raycast/api";
-import { execFileSync } from "node:child_process";
+import { showToast, Toast } from "@raycast/api";
 import { getFinderTargetPath } from "./finder";
+import { openInGhostty } from "./ghostty";
 
 export default async function () {
   const targetPath = await getFinderTargetPath();
@@ -11,10 +11,13 @@ export default async function () {
   }
 
   try {
-    execFileSync("/opt/homebrew/bin/wezterm", ["start", "--cwd", targetPath], { encoding: "utf-8" });
+    await openInGhostty(targetPath);
     await showToast({ style: Toast.Style.Success, title: "Done" });
-  } catch {
-    await open(targetPath, "com.github.wez.wezterm");
-    await showToast({ style: Toast.Style.Success, title: "Done" });
+  } catch (error) {
+    await showToast({
+      style: Toast.Style.Failure,
+      title: "Failed to open Ghostty",
+      message: error instanceof Error ? error.message : String(error),
+    });
   }
 }
