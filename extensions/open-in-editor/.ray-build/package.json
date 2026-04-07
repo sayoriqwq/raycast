@@ -14,9 +14,9 @@
       "icon": "vscode.png"
     },
     {
-      "name": "open-in-zed",
-      "title": "Open in Zed",
-      "description": "Open current Finder directory or selected items in Zed",
+      "name": "open-in-zed-preview",
+      "title": "Open in Zed Preview",
+      "description": "Open current Finder directory or selected items in Zed Preview",
       "mode": "no-view",
       "icon": "zed.png"
     },

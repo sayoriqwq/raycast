@@ -15,8 +15,8 @@ declare type Preferences = ExtensionPreferences
 declare namespace Preferences {
   /** Preferences accessible in the `open-in-vscode` command */
   export type OpenInVscode = ExtensionPreferences & {}
-  /** Preferences accessible in the `open-in-zed` command */
-  export type OpenInZed = ExtensionPreferences & {}
+  /** Preferences accessible in the `open-in-zed-preview` command */
+  export type OpenInZedPreview = ExtensionPreferences & {}
   /** Preferences accessible in the `open-in-kiro` command */
   export type OpenInKiro = ExtensionPreferences & {}
   /** Preferences accessible in the `open-in-antigravity` command */
@@ -32,8 +32,8 @@ declare namespace Preferences {
 declare namespace Arguments {
   /** Arguments passed to the `open-in-vscode` command */
   export type OpenInVscode = {}
-  /** Arguments passed to the `open-in-zed` command */
-  export type OpenInZed = {}
+  /** Arguments passed to the `open-in-zed-preview` command */
+  export type OpenInZedPreview = {}
   /** Arguments passed to the `open-in-kiro` command */
   export type OpenInKiro = {}
   /** Arguments passed to the `open-in-antigravity` command */
