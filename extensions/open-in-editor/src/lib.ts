@@ -1,5 +1,13 @@
-import { getApplications, getSelectedFinderItems, open, showToast, Toast } from "@raycast/api";
-import { execSync } from "node:child_process";
+import { getApplications, getSelectedFinderItems, open, showToast, Toast, type Application } from "@raycast/api";
+import { execFileSync, execSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
+type OpenPath = (path: string, app: Application) => Promise<void> | void;
+
+type OpenInEditorOptions = {
+  openPath?: OpenPath;
+};
 
 function getFinderWindowPath(): string {
   const script = `
@@ -16,7 +24,16 @@ function getFinderWindowPath(): string {
   return execSync(`osascript -e '${script.replace(/'/g, "'\\''")}'`, { encoding: "utf-8" }).trim();
 }
 
-export async function openInEditor(bundleId: string, appName: string): Promise<void> {
+async function openPath(path: string, app: Application, options: OpenInEditorOptions): Promise<void> {
+  if (options.openPath) {
+    await options.openPath(path, app);
+    return;
+  }
+
+  await open(path, app);
+}
+
+export async function openInEditor(bundleId: string, appName: string, options: OpenInEditorOptions = {}): Promise<void> {
   const apps = await getApplications();
   const app = apps.find((a) => a.bundleId === bundleId);
 
@@ -28,30 +45,44 @@ export async function openInEditor(bundleId: string, appName: string): Promise<v
     return;
   }
 
-  try {
-    const items = await getSelectedFinderItems();
-    if (items.length > 0) {
-      for (const item of items) {
-        await open(item.path, app);
-      }
-      return;
+  const items = await (async () => {
+    try {
+      return await getSelectedFinderItems();
+    } catch {
+      return [];
     }
-  } catch {
-    // No selected items, fall through to window path
+  })();
+
+  if (items.length > 0) {
+    for (const item of items) {
+      await openPath(item.path, app, options);
+    }
+    return;
   }
 
+  let windowPath = "";
   try {
-    const windowPath = getFinderWindowPath();
-    if (windowPath) {
-      await open(windowPath, app);
-      return;
-    }
+    windowPath = getFinderWindowPath();
   } catch {
     // Could not get window path
+  }
+
+  if (windowPath) {
+    await openPath(windowPath, app, options);
+    return;
   }
 
   await showToast({
     style: Toast.Style.Failure,
     title: "No Finder items or window selected",
+  });
+}
+
+export function openInZedNewWindow(path: string, app: Application): void {
+  const cliPath = join(app.path, "Contents", "MacOS", "cli");
+  const zedPath = existsSync(cliPath) ? cliPath : "/usr/local/bin/zed";
+
+  execFileSync(zedPath, ["-n", path], {
+    stdio: "ignore",
   });
 }
