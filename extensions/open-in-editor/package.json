@@ -8,15 +8,15 @@
   "commands": [
     {
       "name": "open-in-vscode",
-      "title": "Open in VSCode",
+      "title": "Open in VS Code",
       "description": "Open current Finder directory or selected items in Visual Studio Code",
       "mode": "no-view",
       "icon": "vscode.png"
     },
     {
-      "name": "open-in-zed-preview",
-      "title": "Open in Zed Preview",
-      "description": "Open current Finder directory or selected items in Zed Preview",
+      "name": "open-in-zed-nightly",
+      "title": "Open in Zed Nightly",
+      "description": "Open current Finder directory or selected items in Zed Nightly",
       "mode": "no-view",
       "icon": "zed.png"
     },
