@@ -17,16 +17,8 @@ declare namespace Preferences {
   export type OpenInVscode = ExtensionPreferences & {}
   /** Preferences accessible in the `open-in-zed-nightly` command */
   export type OpenInZedNightly = ExtensionPreferences & {}
-  /** Preferences accessible in the `open-in-kiro` command */
-  export type OpenInKiro = ExtensionPreferences & {}
-  /** Preferences accessible in the `open-in-antigravity` command */
-  export type OpenInAntigravity = ExtensionPreferences & {}
   /** Preferences accessible in the `open-in-codex` command */
   export type OpenInCodex = ExtensionPreferences & {}
-  /** Preferences accessible in the `open-in-aionui` command */
-  export type OpenInAionui = ExtensionPreferences & {}
-  /** Preferences accessible in the `open-in-opencode` command */
-  export type OpenInOpencode = ExtensionPreferences & {}
 }
 
 declare namespace Arguments {
@@ -34,15 +26,7 @@ declare namespace Arguments {
   export type OpenInVscode = {}
   /** Arguments passed to the `open-in-zed-nightly` command */
   export type OpenInZedNightly = {}
-  /** Arguments passed to the `open-in-kiro` command */
-  export type OpenInKiro = {}
-  /** Arguments passed to the `open-in-antigravity` command */
-  export type OpenInAntigravity = {}
   /** Arguments passed to the `open-in-codex` command */
   export type OpenInCodex = {}
-  /** Arguments passed to the `open-in-aionui` command */
-  export type OpenInAionui = {}
-  /** Arguments passed to the `open-in-opencode` command */
-  export type OpenInOpencode = {}
 }
 
