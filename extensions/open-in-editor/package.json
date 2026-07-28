@@ -3,7 +3,7 @@
   "title": "Open in Editor",
   "description": "Open Finder selection or current window in your preferred IDE",
   "icon": "icon.png",
-  "author": "sayori",
+  "author": "sayori_qwq",
   "license": "MIT",
   "commands": [
     {
@@ -39,7 +39,7 @@
   },
   "scripts": {
     "dev": "ray develop",
-    "build": "ray build -e dev -o .ray-build && cp .ray-build/open-in-*.js .",
+    "build": "node ../../scripts/build-extension.mjs",
     "lint": "ray lint"
   }
 }

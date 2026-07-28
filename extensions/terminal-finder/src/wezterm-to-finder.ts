@@ -1,6 +1,7 @@
 import { open, showToast, Toast } from "@raycast/api";
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { URL } from "node:url";
+import { getWezTermExecutable } from "./wezterm";
 
 interface WezTermPane {
   pane_id: number;
@@ -9,7 +10,9 @@ interface WezTermPane {
 }
 
 function getWezTermCwd(): string {
-  const output = execSync("/opt/homebrew/bin/wezterm cli list --format json", { encoding: "utf-8" });
+  const output = execFileSync(getWezTermExecutable(), ["cli", "list", "--format", "json"], {
+    encoding: "utf-8",
+  });
   const panes: WezTermPane[] = JSON.parse(output);
 
   const active = panes.find((p) => p.is_active) ?? panes[0];

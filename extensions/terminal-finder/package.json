@@ -3,7 +3,7 @@
   "title": "Terminal Finder",
   "description": "Navigate between Finder and WezTerm or Ghostty",
   "icon": "icon.png",
-  "author": "sayori",
+  "author": "sayori_qwq",
   "license": "MIT",
   "commands": [
     {
@@ -46,7 +46,7 @@
   },
   "scripts": {
     "dev": "ray develop",
-    "build": "ray build -e dev -o .ray-build && cp .ray-build/finder-to-wezterm.js .ray-build/wezterm-to-finder.js .ray-build/finder-to-ghostty.js .ray-build/ghostty-to-finder.js .",
+    "build": "node ../../scripts/build-extension.mjs",
     "lint": "ray lint"
   }
 }
