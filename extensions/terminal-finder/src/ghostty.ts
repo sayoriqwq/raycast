@@ -1,20 +1,20 @@
-import { open } from "@raycast/api";
-import { execFileSync, spawnSync } from "node:child_process";
+import { execFileSync, spawnSync } from 'node:child_process'
+import { open } from '@raycast/api'
 
-const GHOSTTY_APP_NAME = "Ghostty";
-const GHOSTTY_APP_PATH = "/Applications/Ghostty.app";
-const GHOSTTY_BUNDLE_ID = "com.mitchellh.ghostty";
+const GHOSTTY_APP_NAME = 'Ghostty'
+const GHOSTTY_APP_PATH = '/Applications/Ghostty.app'
+const GHOSTTY_BUNDLE_ID = 'com.mitchellh.ghostty'
 
 function runAppleScript(script: string): string {
-  return execFileSync("/usr/bin/osascript", ["-e", script], { encoding: "utf-8" }).trim();
+  return execFileSync('/usr/bin/osascript', ['-e', script], { encoding: 'utf-8' }).trim()
 }
 
 function isGhosttyRunning(): boolean {
-  return spawnSync("/usr/bin/pgrep", ["-x", "ghostty"]).status === 0;
+  return spawnSync('/usr/bin/pgrep', ['-x', 'ghostty']).status === 0
 }
 
 async function openPathInGhostty(path: string, application: string): Promise<void> {
-  await open(path, application);
+  await open(path, application)
 }
 
 export async function openInGhostty(path: string): Promise<void> {
@@ -22,20 +22,21 @@ export async function openInGhostty(path: string): Promise<void> {
     () => openPathInGhostty(path, GHOSTTY_APP_NAME),
     () => openPathInGhostty(path, GHOSTTY_BUNDLE_ID),
     () => openPathInGhostty(path, GHOSTTY_APP_PATH),
-  ];
+  ]
 
-  let lastError: unknown;
+  let lastError: unknown
 
   for (const attempt of attempts) {
     try {
-      await attempt();
-      return;
-    } catch (error) {
-      lastError = error;
+      await attempt()
+      return
+    }
+    catch (error) {
+      lastError = error
     }
   }
 
-  throw lastError instanceof Error ? lastError : new Error("Failed to open the directory in Ghostty");
+  throw lastError instanceof Error ? lastError : new Error('Failed to open the directory in Ghostty')
 }
 
 function getGhosttyWorkingDirectory(): string {
@@ -45,14 +46,14 @@ function getGhosttyWorkingDirectory(): string {
         return working directory of focused terminal of selected tab of front window
       end tell
     end using terms from
-  `;
+  `
 
-  return runAppleScript(script);
+  return runAppleScript(script)
 }
 
 function revealGhosttyWorkingDirectoryViaShell(): void {
   if (!isGhosttyRunning()) {
-    throw new Error("Ghostty is not running");
+    throw new Error('Ghostty is not running')
   }
 
   const script = `
@@ -62,21 +63,21 @@ function revealGhosttyWorkingDirectoryViaShell(): void {
       keystroke "open -a Finder ./"
       key code 76
     end tell
-  `;
+  `
 
-  runAppleScript(script);
+  runAppleScript(script)
 }
 
 export async function openGhosttyDirectoryInFinder(): Promise<void> {
   try {
-    const cwd = getGhosttyWorkingDirectory();
+    const cwd = getGhosttyWorkingDirectory()
     if (!cwd) {
-      throw new Error("No active Ghostty directory found");
+      throw new Error('No active Ghostty directory found')
     }
 
-    await open(cwd);
-    return;
-  } catch {
-    revealGhosttyWorkingDirectoryViaShell();
+    await open(cwd)
+  }
+  catch {
+    revealGhosttyWorkingDirectoryViaShell()
   }
 }

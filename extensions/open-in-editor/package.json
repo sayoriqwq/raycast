@@ -2,9 +2,9 @@
   "name": "open-in-editor",
   "title": "Open in Editor",
   "description": "Open Finder selection or current window in your preferred IDE",
-  "icon": "icon.png",
   "author": "sayori_qwq",
   "license": "MIT",
+  "icon": "icon.png",
   "commands": [
     {
       "name": "open-in-vscode",
@@ -29,17 +29,21 @@
     }
   ],
   "platforms": ["macOS"],
-  "dependencies": {
-    "@raycast/api": "latest"
-  },
-  "devDependencies": {
-    "@types/node": "latest",
-    "@types/react": "^19.2.14",
-    "typescript": "latest"
-  },
   "scripts": {
     "dev": "ray develop",
     "build": "node ../../scripts/build-extension.mjs",
-    "lint": "ray lint"
+    "lint": "ray lint",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@raycast/api": "1.104.23"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "9.2.0",
+    "@types/node": "26.1.2",
+    "@types/react": "19.2.17",
+    "@typescript/native": "npm:typescript@7.0.2",
+    "eslint": "10.8.0",
+    "typescript": "npm:@typescript/typescript6@6.0.2"
   }
 }

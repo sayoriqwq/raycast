@@ -1,0 +1,12 @@
+allowBuilds:
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@types/node@26.1.2'
+shellEmulator: true
+
+trustPolicy: no-downgrade
+
+peerDependencyRules:
+  allowedVersions:
+    '@types/node': '26'
+    '@types/react': '19'

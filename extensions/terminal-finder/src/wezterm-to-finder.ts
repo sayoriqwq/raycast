@@ -1,39 +1,40 @@
-import { open, showToast, Toast } from "@raycast/api";
-import { execFileSync } from "node:child_process";
-import { URL } from "node:url";
-import { getWezTermExecutable } from "./wezterm";
+import { execFileSync } from 'node:child_process'
+import { URL } from 'node:url'
+import { open, showToast, Toast } from '@raycast/api'
+import { getWezTermExecutable } from './wezterm'
 
 interface WezTermPane {
-  pane_id: number;
-  cwd: string;
-  is_active: boolean;
+  pane_id: number
+  cwd: string
+  is_active: boolean
 }
 
 function getWezTermCwd(): string {
-  const output = execFileSync(getWezTermExecutable(), ["cli", "list", "--format", "json"], {
-    encoding: "utf-8",
-  });
-  const panes: WezTermPane[] = JSON.parse(output);
+  const output = execFileSync(getWezTermExecutable(), ['cli', 'list', '--format', 'json'], {
+    encoding: 'utf-8',
+  })
+  const panes: WezTermPane[] = JSON.parse(output)
 
-  const active = panes.find((p) => p.is_active) ?? panes[0];
+  const active = panes.find(p => p.is_active) ?? panes[0]
   if (!active?.cwd) {
-    throw new Error("No active WezTerm pane found");
+    throw new Error('No active WezTerm pane found')
   }
 
   // cwd is a file:// URL, convert to path
-  return new URL(active.cwd).pathname;
+  return new URL(active.cwd).pathname
 }
 
 export default async function () {
   try {
-    const cwd = getWezTermCwd();
-    await open(cwd);
-    await showToast({ style: Toast.Style.Success, title: "Done" });
-  } catch (e) {
+    const cwd = getWezTermCwd()
+    await open(cwd)
+    await showToast({ style: Toast.Style.Success, title: 'Done' })
+  }
+  catch (e) {
     await showToast({
       style: Toast.Style.Failure,
-      title: "Failed to get WezTerm directory",
+      title: 'Failed to get WezTerm directory',
       message: e instanceof Error ? e.message : String(e),
-    });
+    })
   }
 }
