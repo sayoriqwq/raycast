@@ -7,30 +7,30 @@
 
 | 路径 | 内容 | 所有权 |
 | --- | --- | --- |
-| `scripts/` | 8 个 Chrome navigation Script Commands 及共享运行文件 | 本仓库 |
+| `scripts/` | 7 个 Chrome navigation Script Commands 及共享运行文件 | 本仓库 |
 | `extensions/open-in-editor/` | Finder → VS Code、Zed Nightly、Codex | 本仓库 |
 | `extensions/terminal-finder/` | Finder ↔ WezTerm / Ghostty | 本仓库 |
 | `raycast-source.json` | 下游可消费的机器可读源码合同 | 本仓库 |
 
 `raycast-source.json` 是稳定的消费入口。它以仓库根目录为基准，分别列出：
 
-- `scriptCommands.entrypoints`：Raycast 应索引的 8 个入口脚本；
+- `scriptCommands.entrypoints`：Raycast 应索引的 7 个入口脚本；
 - `scriptCommands.supportExecutables`：入口调用的可执行支持文件；
 - `scriptCommands.supportFiles`：配置和 JXA 运行文件；
 - `extensions`：本地 extension 的源码目录；
-- `excluded`：保留在 Git 中、但所有消费者必须排除的资产。
+- `excluded`：消费者必须排除的资产；当前为空。
 
 消费者必须固定 Git commit，并按 manifest 的白名单复制或链接文件；不要直接暴露整个
-`scripts/` 目录，否则会把已废弃入口重新带入 Raycast。
+`scripts/` 目录。
 
 ## Script Commands
 
-8 个 active entrypoint 都是薄 wrapper，共享 `scripts/chrome-switch.sh`、
+7 个 active entrypoint 都是薄 wrapper，共享 `scripts/chrome-switch.sh`、
 `scripts/lib/chrome-switch.js` 和各自的 JSON 配置。所有相对路径都以 manifest 所列出的目录
 结构为合同，部署时必须保持该结构。
 
-`scripts/toggle-db-tunnel.sh` 已废弃但暂时保留。它不属于 active manifest；不得为它安装
-`autossh`、补充 SSH/secret 配置、执行网络连接或加入 activation。删除该文件需要独立决定。
+`Toggle DB Tunnel` 与 `Yume (Switch or Open)` 已从源码和 manifest 删除，不得由消费者恢复、
+打包或加入 activation；其中 DB tunnel 也不得引入 `autossh`、SSH/secret 配置或网络连接。
 
 ## 本地 extensions
 

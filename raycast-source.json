@@ -8,8 +8,7 @@
       "scripts/gemini-switch.sh",
       "scripts/github-switch.sh",
       "scripts/notebook-switch.sh",
-      "scripts/youtube-switch.sh",
-      "scripts/yume-switch.sh"
+      "scripts/youtube-switch.sh"
     ],
     "supportExecutables": [
       "scripts/chrome-switch.sh"
@@ -22,7 +21,6 @@
       "scripts/config/github-switch.json",
       "scripts/config/notebook-switch.json",
       "scripts/config/youtube-switch.json",
-      "scripts/config/yume-switch.json",
       "scripts/lib/chrome-switch.js"
     ]
   },
@@ -36,11 +34,5 @@
       "path": "extensions/terminal-finder"
     }
   ],
-  "excluded": [
-    {
-      "path": "scripts/toggle-db-tunnel.sh",
-      "status": "deprecated",
-      "reason": "Retained for history; consumers must not package, activate, or restore it."
-    }
-  ]
+  "excluded": []
 }
