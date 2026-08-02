@@ -21,6 +21,14 @@
       "scripts/config/github-switch.json",
       "scripts/config/notebook-switch.json",
       "scripts/config/youtube-switch.json",
+      "scripts/icons/bilibili.png",
+      "scripts/icons/chatgpt.png",
+      "scripts/icons/claude.png",
+      "scripts/icons/gemini-notebook-dark.png",
+      "scripts/icons/gemini-notebook-light.png",
+      "scripts/icons/gemini.png",
+      "scripts/icons/github.png",
+      "scripts/icons/youtube.png",
       "scripts/lib/chrome-switch.js"
     ]
   },

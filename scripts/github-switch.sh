@@ -6,7 +6,7 @@
 # @raycast.mode silent
 # @raycast.packageName Navigation
 # @raycast.description Switch to an existing GitHub tab in Google Chrome; otherwise open GitHub.
-# @raycast.icon 🐙
+# @raycast.icon icons/github.png
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 exec "$SCRIPT_DIR/chrome-switch.sh" "$SCRIPT_DIR/config/github-switch.json"

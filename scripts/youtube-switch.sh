@@ -6,7 +6,7 @@
 # @raycast.mode silent
 # @raycast.packageName Navigation
 # @raycast.description Switch to an existing YouTube tab in Google Chrome; otherwise open YouTube.
-# @raycast.icon 📺
+# @raycast.icon icons/youtube.png
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 exec "$SCRIPT_DIR/chrome-switch.sh" "$SCRIPT_DIR/config/youtube-switch.json"

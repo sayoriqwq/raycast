@@ -7,7 +7,7 @@
 
 | 路径 | 内容 | 所有权 |
 | --- | --- | --- |
-| `scripts/` | 7 个 Chrome navigation Script Commands 及共享运行文件 | 本仓库 |
+| `scripts/` | 7 个 Chrome navigation Script Commands、共享运行文件及 8 个品牌图标 | 本仓库 |
 | `extensions/open-in-editor/` | Finder → VS Code、Zed Nightly、Codex | 本仓库 |
 | `extensions/terminal-finder/` | Finder ↔ WezTerm / Ghostty | 本仓库 |
 | `raycast-source.json` | 下游可消费的机器可读源码合同 | 本仓库 |
@@ -26,8 +26,13 @@
 ## Script Commands
 
 7 个 active entrypoint 都是薄 wrapper，共享 `scripts/chrome-switch.sh`、
-`scripts/lib/chrome-switch.js` 和各自的 JSON 配置。所有相对路径都以 manifest 所列出的目录
-结构为合同，部署时必须保持该结构。
+`scripts/lib/chrome-switch.js`、各自的 JSON 配置和 `scripts/icons/` 中的本地图标。所有相对路径
+都以 manifest 所列出的目录结构为合同，部署时必须保持该结构。图标固定在源码 revision 中，
+Script Commands 不依赖运行时网络获取图标。
+
+Gemini Notebook 继续使用 `notebook-switch.sh` 作为稳定入口路径，显示名和默认地址分别为
+`Gemini Notebook (Switch or Open)` 与 `https://notebook.google.com/`。配置仍匹配旧的
+`notebooklm.google.com`，仅用于切换尚未重定向的既有标签页；应用内 alias `llm` 不属于源码合同。
 
 `Toggle DB Tunnel` 与 `Yume (Switch or Open)` 已从源码和 manifest 删除，不得由消费者恢复、
 打包或加入 activation；其中 DB tunnel 也不得引入 `autossh`、SSH/secret 配置或网络连接。
