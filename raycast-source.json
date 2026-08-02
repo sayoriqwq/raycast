@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "scriptCommands": {
+    "entrypoints": [
+      "scripts/bilibili-switch.sh",
+      "scripts/chatgpt-switch.sh",
+      "scripts/claude-switch.sh",
+      "scripts/gemini-switch.sh",
+      "scripts/github-switch.sh",
+      "scripts/notebook-switch.sh",
+      "scripts/youtube-switch.sh"
+    ],
+    "supportExecutables": [
+      "scripts/chrome-switch.sh"
+    ],
+    "supportFiles": [
+      "scripts/config/bilibili-switch.json",
+      "scripts/config/chatgpt-switch.json",
+      "scripts/config/claude-switch.json",
+      "scripts/config/gemini-switch.json",
+      "scripts/config/github-switch.json",
+      "scripts/config/notebook-switch.json",
+      "scripts/config/youtube-switch.json",
+      "scripts/lib/chrome-switch.js"
+    ]
+  },
+  "extensions": [
+    {
+      "name": "open-in-editor",
+      "path": "extensions/open-in-editor"
+    },
+    {
+      "name": "terminal-finder",
+      "path": "extensions/terminal-finder"
+    }
+  ],
+  "excluded": []
+}
