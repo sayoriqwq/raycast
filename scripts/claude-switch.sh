@@ -6,7 +6,7 @@
 # @raycast.mode silent
 # @raycast.packageName Navigation
 # @raycast.description Switch to an existing Claude tab in Google Chrome; otherwise open Claude.
-# @raycast.icon 🤖
+# @raycast.icon icons/claude.png
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 exec "$SCRIPT_DIR/chrome-switch.sh" "$SCRIPT_DIR/config/claude-switch.json"
