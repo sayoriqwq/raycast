@@ -11,7 +11,5 @@ async function openInCodexWorkspace(path: string, app: Application): Promise<voi
 }
 
 export default async function () {
-  await openInEditor('com.openai.codex', 'Codex', {
-    openPath: openInCodexWorkspace,
-  })
+  await openInEditor('com.openai.codex', 'Codex', openInCodexWorkspace)
 }

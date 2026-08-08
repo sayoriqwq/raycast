@@ -2,13 +2,9 @@ import type { Application } from '@raycast/api'
 import { execFileSync, execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
-import { getApplications, getSelectedFinderItems, open, showToast, Toast } from '@raycast/api'
+import { getApplications, getSelectedFinderItems, showToast, Toast } from '@raycast/api'
 
-type OpenPath = (path: string, app: Application) => Promise<void> | void
-
-interface OpenInEditorOptions {
-  openPath?: OpenPath
-}
+type OpenTarget = (path: string, app: Application) => Promise<void> | void
 
 function getFinderWindowPath(): string {
   const script = `
@@ -25,16 +21,7 @@ function getFinderWindowPath(): string {
   return execSync(`osascript -e '${script.replace(/'/g, '\'\\\'\'')}'`, { encoding: 'utf-8' }).trim()
 }
 
-async function openPath(path: string, app: Application, options: OpenInEditorOptions): Promise<void> {
-  if (options.openPath) {
-    await options.openPath(path, app)
-    return
-  }
-
-  await open(path, app)
-}
-
-export async function openInEditor(bundleId: string, appName: string, options: OpenInEditorOptions = {}): Promise<void> {
+export async function openInEditor(bundleId: string, appName: string, openTarget: OpenTarget): Promise<void> {
   const apps = await getApplications()
   const app = apps.find(a => a.bundleId === bundleId)
 
@@ -57,7 +44,7 @@ export async function openInEditor(bundleId: string, appName: string, options: O
 
   if (items.length > 0) {
     for (const item of items) {
-      await openPath(item.path, app, options)
+      await openTarget(item.path, app)
     }
     return
   }
@@ -71,13 +58,21 @@ export async function openInEditor(bundleId: string, appName: string, options: O
   }
 
   if (windowPath) {
-    await openPath(windowPath, app, options)
+    await openTarget(windowPath, app)
     return
   }
 
   await showToast({
     style: Toast.Style.Failure,
     title: 'No Finder items or window selected',
+  })
+}
+
+export function openInVSCodeNewWindow(path: string, app: Application): void {
+  const codePath = join(app.path, 'Contents', 'Resources', 'app', 'bin', 'code')
+
+  execFileSync(codePath, ['--new-window', path], {
+    stdio: 'ignore',
   })
 }
 
