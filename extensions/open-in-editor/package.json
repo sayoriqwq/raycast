@@ -36,7 +36,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@raycast/api": "1.104.23"
+    "@raycast/api": "2.0.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "9.2.0",
