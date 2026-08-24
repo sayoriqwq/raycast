@@ -8,7 +8,7 @@
 | 路径 | 内容 | 所有权 |
 | --- | --- | --- |
 | `scripts/` | 7 个 Chrome navigation Script Commands、共享运行文件及 8 个品牌图标 | 本仓库 |
-| `extensions/open-in-editor/` | Finder → VS Code、Zed Nightly、Codex | 本仓库 |
+| `extensions/open-in-editor/` | Finder → VS Code、Zed Preview、Codex | 本仓库 |
 | `extensions/terminal-finder/` | Finder ↔ WezTerm / Ghostty | 本仓库 |
 | `raycast-source.json` | 下游可消费的机器可读源码合同 | 本仓库 |
 

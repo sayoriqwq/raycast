@@ -1,6 +1,5 @@
 import type { Application } from '@raycast/api'
 import { execFileSync, execSync } from 'node:child_process'
-import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { getApplications, getSelectedFinderItems, showToast, Toast } from '@raycast/api'
 
@@ -78,9 +77,8 @@ export function openInVSCodeNewWindow(path: string, app: Application): void {
 
 export function openInZedNewWindow(path: string, app: Application): void {
   const cliPath = join(app.path, 'Contents', 'MacOS', 'cli')
-  const zedPath = existsSync(cliPath) ? cliPath : '/usr/local/bin/zed'
 
-  execFileSync(zedPath, ['-n', path], {
+  execFileSync(cliPath, ['-n', path], {
     stdio: 'ignore',
   })
 }

@@ -17,16 +17,15 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/open-in-zed-nightly.ts
-var open_in_zed_nightly_exports = {};
-__export(open_in_zed_nightly_exports, {
+// src/open-in-zed-preview.ts
+var open_in_zed_preview_exports = {};
+__export(open_in_zed_preview_exports, {
   default: () => Command
 });
-module.exports = __toCommonJS(open_in_zed_nightly_exports);
+module.exports = __toCommonJS(open_in_zed_preview_exports);
 
 // src/lib.ts
 var import_node_child_process = require("node:child_process");
-var import_node_fs = require("node:fs");
 var import_node_path = require("node:path");
 var import_api = require("@raycast/api");
 function getFinderWindowPath() {
@@ -82,13 +81,12 @@ async function openInEditor(bundleId, appName, openTarget) {
 }
 function openInZedNewWindow(path, app) {
   const cliPath = (0, import_node_path.join)(app.path, "Contents", "MacOS", "cli");
-  const zedPath = (0, import_node_fs.existsSync)(cliPath) ? cliPath : "/usr/local/bin/zed";
-  (0, import_node_child_process.execFileSync)(zedPath, ["-n", path], {
+  (0, import_node_child_process.execFileSync)(cliPath, ["-n", path], {
     stdio: "ignore"
   });
 }
 
-// src/open-in-zed-nightly.ts
+// src/open-in-zed-preview.ts
 async function Command() {
-  await openInEditor("dev.zed.Zed-Nightly", "Zed Nightly", openInZedNewWindow);
+  await openInEditor("dev.zed.Zed-Preview", "Zed Preview", openInZedNewWindow);
 }

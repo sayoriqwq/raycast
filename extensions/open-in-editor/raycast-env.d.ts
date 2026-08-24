@@ -15,8 +15,8 @@ declare type Preferences = ExtensionPreferences
 declare namespace Preferences {
   /** Preferences accessible in the `open-in-vscode` command */
   export type OpenInVscode = ExtensionPreferences & {}
-  /** Preferences accessible in the `open-in-zed-nightly` command */
-  export type OpenInZedNightly = ExtensionPreferences & {}
+  /** Preferences accessible in the `open-in-zed-preview` command */
+  export type OpenInZedPreview = ExtensionPreferences & {}
   /** Preferences accessible in the `open-in-codex` command */
   export type OpenInCodex = ExtensionPreferences & {}
 }
@@ -24,8 +24,8 @@ declare namespace Preferences {
 declare namespace Arguments {
   /** Arguments passed to the `open-in-vscode` command */
   export type OpenInVscode = {}
-  /** Arguments passed to the `open-in-zed-nightly` command */
-  export type OpenInZedNightly = {}
+  /** Arguments passed to the `open-in-zed-preview` command */
+  export type OpenInZedPreview = {}
   /** Arguments passed to the `open-in-codex` command */
   export type OpenInCodex = {}
 }
