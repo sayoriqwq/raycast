@@ -1,5 +1,5 @@
 import { openInEditor, openInZedNewWindow } from './lib'
 
 export default async function Command() {
-  await openInEditor('dev.zed.Zed-Nightly', 'Zed Nightly', openInZedNewWindow)
+  await openInEditor('dev.zed.Zed-Preview', 'Zed Preview', openInZedNewWindow)
 }
