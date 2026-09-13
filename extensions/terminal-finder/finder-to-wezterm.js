@@ -30,17 +30,20 @@ var import_api2 = require("@raycast/api");
 var import_node_child_process = require("node:child_process");
 var import_api = require("@raycast/api");
 function runAppleScript(script) {
-  return (0, import_node_child_process.execFileSync)("/usr/bin/osascript", ["-e", script], { encoding: "utf-8" }).trim();
+  return (0, import_node_child_process.execFileSync)("/usr/bin/osascript", ["-e", script], {
+    encoding: "utf-8"
+  }).trim();
 }
 function getFinderWindowPath() {
   const script = `
     if application "Finder" is running and frontmost of application "Finder" then
       tell app "Finder"
+        if (count of windows) is 0 then return ""
         set finderWindow to window 1
         return POSIX path of (target of finderWindow as alias)
       end tell
     else
-      error "Could not get the selected Finder window"
+      return ""
     end if
   `;
   return runAppleScript(script);
@@ -53,11 +56,7 @@ async function getFinderTargetPath() {
     }
   } catch {
   }
-  try {
-    return getFinderWindowPath();
-  } catch {
-    return void 0;
-  }
+  return getFinderWindowPath() || void 0;
 }
 
 // src/wezterm.ts
@@ -80,16 +79,28 @@ function getWezTermExecutable() {
 
 // src/finder-to-wezterm.ts
 async function finder_to_wezterm_default() {
-  const targetPath = await getFinderTargetPath();
-  if (!targetPath) {
-    await (0, import_api2.showToast)({ style: import_api2.Toast.Style.Failure, title: "No Finder items or window selected" });
-    return;
-  }
   try {
-    (0, import_node_child_process3.execFileSync)(getWezTermExecutable(), ["start", "--cwd", targetPath], { encoding: "utf-8" });
+    const targetPath = await getFinderTargetPath();
+    if (!targetPath) {
+      await (0, import_api2.showToast)({
+        style: import_api2.Toast.Style.Failure,
+        title: "No Finder items or window selected"
+      });
+      return;
+    }
+    try {
+      (0, import_node_child_process3.execFileSync)(getWezTermExecutable(), ["start", "--cwd", targetPath], {
+        encoding: "utf-8"
+      });
+    } catch {
+      await (0, import_api2.open)(targetPath, "com.github.wez.wezterm");
+    }
     await (0, import_api2.showToast)({ style: import_api2.Toast.Style.Success, title: "Done" });
-  } catch {
-    await (0, import_api2.open)(targetPath, "com.github.wez.wezterm");
-    await (0, import_api2.showToast)({ style: import_api2.Toast.Style.Success, title: "Done" });
+  } catch (error) {
+    await (0, import_api2.showToast)({
+      style: import_api2.Toast.Style.Failure,
+      title: "Failed to open WezTerm",
+      message: error instanceof Error ? error.message : String(error)
+    });
   }
 }

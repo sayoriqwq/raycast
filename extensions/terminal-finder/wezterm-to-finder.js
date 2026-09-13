@@ -47,15 +47,19 @@ function getWezTermExecutable() {
 
 // src/wezterm-to-finder.ts
 function getWezTermCwd() {
-  const output = (0, import_node_child_process2.execFileSync)(getWezTermExecutable(), ["cli", "list", "--format", "json"], {
-    encoding: "utf-8"
-  });
+  const output = (0, import_node_child_process2.execFileSync)(
+    getWezTermExecutable(),
+    ["cli", "list", "--format", "json"],
+    {
+      encoding: "utf-8"
+    }
+  );
   const panes = JSON.parse(output);
   const active = panes.find((p) => p.is_active) ?? panes[0];
   if (!active?.cwd) {
     throw new Error("No active WezTerm pane found");
   }
-  return new import_node_url.URL(active.cwd).pathname;
+  return (0, import_node_url.fileURLToPath)(active.cwd);
 }
 async function wezterm_to_finder_default() {
   try {

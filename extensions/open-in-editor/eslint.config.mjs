@@ -1,10 +1,7 @@
-import antfu from '@antfu/eslint-config'
+import { defineConfig } from "eslint/config";
+import raycastConfig from "@raycast/eslint-config";
 
-// Antfu's stylistic rules are the sole formatter; Prettier is intentionally omitted.
-export default antfu({
-  typescript: true,
-  ignores: [
-    '*.js',
-    'raycast-env.d.ts',
-  ],
-})
+export default defineConfig([
+  { ignores: ["dist/**", "*.js", "raycast-env.d.ts"] },
+  ...raycastConfig,
+]);

@@ -29,17 +29,20 @@ var import_api3 = require("@raycast/api");
 var import_node_child_process = require("node:child_process");
 var import_api = require("@raycast/api");
 function runAppleScript(script) {
-  return (0, import_node_child_process.execFileSync)("/usr/bin/osascript", ["-e", script], { encoding: "utf-8" }).trim();
+  return (0, import_node_child_process.execFileSync)("/usr/bin/osascript", ["-e", script], {
+    encoding: "utf-8"
+  }).trim();
 }
 function getFinderWindowPath() {
   const script = `
     if application "Finder" is running and frontmost of application "Finder" then
       tell app "Finder"
+        if (count of windows) is 0 then return ""
         set finderWindow to window 1
         return POSIX path of (target of finderWindow as alias)
       end tell
     else
-      error "Could not get the selected Finder window"
+      return ""
     end if
   `;
   return runAppleScript(script);
@@ -52,47 +55,27 @@ async function getFinderTargetPath() {
     }
   } catch {
   }
-  try {
-    return getFinderWindowPath();
-  } catch {
-    return void 0;
-  }
+  return getFinderWindowPath() || void 0;
 }
 
 // src/ghostty.ts
 var import_api2 = require("@raycast/api");
-var GHOSTTY_APP_NAME = "Ghostty";
-var GHOSTTY_APP_PATH = "/Applications/Ghostty.app";
 var GHOSTTY_BUNDLE_ID = "com.mitchellh.ghostty";
-async function openPathInGhostty(path, application) {
-  await (0, import_api2.open)(path, application);
-}
 async function openInGhostty(path) {
-  const attempts = [
-    () => openPathInGhostty(path, GHOSTTY_APP_NAME),
-    () => openPathInGhostty(path, GHOSTTY_BUNDLE_ID),
-    () => openPathInGhostty(path, GHOSTTY_APP_PATH)
-  ];
-  let lastError;
-  for (const attempt of attempts) {
-    try {
-      await attempt();
-      return;
-    } catch (error) {
-      lastError = error;
-    }
-  }
-  throw lastError instanceof Error ? lastError : new Error("Failed to open the directory in Ghostty");
+  await (0, import_api2.open)(path, GHOSTTY_BUNDLE_ID);
 }
 
 // src/finder-to-ghostty.ts
 async function finder_to_ghostty_default() {
-  const targetPath = await getFinderTargetPath();
-  if (!targetPath) {
-    await (0, import_api3.showToast)({ style: import_api3.Toast.Style.Failure, title: "No Finder items or window selected" });
-    return;
-  }
   try {
+    const targetPath = await getFinderTargetPath();
+    if (!targetPath) {
+      await (0, import_api3.showToast)({
+        style: import_api3.Toast.Style.Failure,
+        title: "No Finder items or window selected"
+      });
+      return;
+    }
     await openInGhostty(targetPath);
     await (0, import_api3.showToast)({ style: import_api3.Toast.Style.Success, title: "Done" });
   } catch (error) {

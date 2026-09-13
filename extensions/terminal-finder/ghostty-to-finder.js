@@ -31,7 +31,9 @@ var import_api = require("@raycast/api");
 var GHOSTTY_APP_NAME = "Ghostty";
 var GHOSTTY_APP_PATH = "/Applications/Ghostty.app";
 function runAppleScript(script) {
-  return (0, import_node_child_process.execFileSync)("/usr/bin/osascript", ["-e", script], { encoding: "utf-8" }).trim();
+  return (0, import_node_child_process.execFileSync)("/usr/bin/osascript", ["-e", script], {
+    encoding: "utf-8"
+  }).trim();
 }
 function isGhosttyRunning() {
   return (0, import_node_child_process.spawnSync)("/usr/bin/pgrep", ["-x", "ghostty"]).status === 0;
@@ -46,30 +48,15 @@ function getGhosttyWorkingDirectory() {
   `;
   return runAppleScript(script);
 }
-function revealGhosttyWorkingDirectoryViaShell() {
+async function openGhosttyDirectoryInFinder() {
   if (!isGhosttyRunning()) {
     throw new Error("Ghostty is not running");
   }
-  const script = `
-    tell application "Finder" to activate
-    tell application (POSIX file "${GHOSTTY_APP_PATH}" as text) to activate
-    tell application "System Events"
-      keystroke "open -a Finder ./"
-      key code 76
-    end tell
-  `;
-  runAppleScript(script);
-}
-async function openGhosttyDirectoryInFinder() {
-  try {
-    const cwd = getGhosttyWorkingDirectory();
-    if (!cwd) {
-      throw new Error("No active Ghostty directory found");
-    }
-    await (0, import_api.open)(cwd);
-  } catch {
-    revealGhosttyWorkingDirectoryViaShell();
+  const cwd = getGhosttyWorkingDirectory();
+  if (!cwd) {
+    throw new Error("No active Ghostty directory found");
   }
+  await (0, import_api.open)(cwd, "com.apple.finder");
 }
 
 // src/ghostty-to-finder.ts

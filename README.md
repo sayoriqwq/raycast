@@ -11,6 +11,22 @@
 | `extensions/open-in-editor/` | Finder → VS Code、Zed Preview、Codex | 本仓库 |
 | `extensions/terminal-finder/` | Finder ↔ WezTerm / Ghostty | 本仓库 |
 | `raycast-source.json` | 下游可消费的机器可读源码合同 | 本仓库 |
+| `tools/` | 仓库检查、行为测试与本地打包工具 | 维护工具，不交给 Raycast 索引 |
+
+## 开发与检查
+
+在仓库根目录运行（Node 26.5.0、pnpm 12.3.4）：
+
+```fish
+node tools/check.mjs
+```
+
+🔎 检查消费合同、Shell / JXA 语法，并逐个安装、lint、dist 构建、核对已提交 JS，最后运行模拟行为测试。
+
+修改 extension 后，先在对应目录运行 `pnpm run package:local` 刷新本地入口，再运行全仓检查。
+GitHub Actions 使用同一个检查入口。详细流程见 [开发说明](docs/development.md)；
+应用依赖、权限和限制见 [Open in Editor](extensions/open-in-editor/README.md) 与
+[Terminal Finder](extensions/terminal-finder/README.md)。
 
 `raycast-source.json` 是稳定的消费入口。它以仓库根目录为基准，分别列出：
 
@@ -39,7 +55,8 @@ Gemini Notebook 继续使用 `notebook-switch.sh` 作为稳定入口路径，显
 
 ## 本地 extensions
 
-两个 extension 是相互独立的 pnpm leaf workspace，没有根 workspace。分别在对应目录验证：
+两个 extension 的依赖安装各自独立，是 pnpm leaf workspace，没有根 workspace。
+本地打包依赖仓库的 `tools/package-local.mjs`，因此应使用完整仓库。分别在对应目录验证：
 
 ```fish
 pnpm install --frozen-lockfile
@@ -47,16 +64,18 @@ pnpm run lint
 pnpm run build
 ```
 
-例如：
+🔎 `build` 使用官方 `ray build -e dist`，输出到被 Git 忽略的 `dist/`，用于分发构建验收。
+
+例如更新编辑器扩展的本地运行入口：
 
 ```fish
 cd extensions/open-in-editor
-pnpm install --frozen-lockfile
-pnpm run lint
-pnpm run build
+pnpm run package:local
 ```
 
-构建后，`package.json` 中每个 `commands[].name` 都必须在 extension 根目录生成对应的
+📦 按既有 dev 打包格式更新根目录 JS；源码与这些 JS 一起提交。
+
+本地打包后，`package.json` 中每个 `commands[].name` 都必须在 extension 根目录生成对应的
 `<name>.js`。这些 JS 是 Raycast 本地 extension 的可执行入口，不能只验证 TypeScript source
 而忽略它们。
 

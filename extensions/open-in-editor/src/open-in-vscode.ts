@@ -1,5 +1,9 @@
-import { openInEditor, openInVSCodeNewWindow } from './lib'
+import { openInEditor, openInVSCodeNewWindow } from "./lib";
 
 export default async function () {
-  await openInEditor('com.microsoft.VSCode', 'Visual Studio Code', openInVSCodeNewWindow)
+  await openInEditor(
+    "com.microsoft.VSCode",
+    "Visual Studio Code",
+    openInVSCodeNewWindow,
+  );
 }

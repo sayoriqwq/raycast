@@ -32,17 +32,31 @@ function getFinderWindowPath() {
   const script = `
     if application "Finder" is running and frontmost of application "Finder" then
       tell app "Finder"
+        if (count of windows) is 0 then return ""
         set finderWindow to window 1
         set finderWindowPath to (POSIX path of (target of finderWindow as alias))
         return finderWindowPath
       end tell
     else
-      error "Could not get the selected Finder window"
+      return ""
     end if
   `;
-  return (0, import_node_child_process.execSync)(`osascript -e '${script.replace(/'/g, "'\\''")}'`, { encoding: "utf-8" }).trim();
+  return (0, import_node_child_process.execFileSync)("/usr/bin/osascript", ["-e", script], {
+    encoding: "utf-8"
+  }).trim();
 }
 async function openInEditor(bundleId, appName, openTarget) {
+  try {
+    await openFinderTarget(bundleId, appName, openTarget);
+  } catch (error) {
+    await (0, import_api.showToast)({
+      style: import_api.Toast.Style.Failure,
+      title: `Failed to open ${appName}`,
+      message: error instanceof Error ? error.message : String(error)
+    });
+  }
+}
+async function openFinderTarget(bundleId, appName, openTarget) {
   const apps = await (0, import_api.getApplications)();
   const app = apps.find((a) => a.bundleId === bundleId);
   if (!app) {
@@ -65,11 +79,7 @@ async function openInEditor(bundleId, appName, openTarget) {
     }
     return;
   }
-  let windowPath = "";
-  try {
-    windowPath = getFinderWindowPath();
-  } catch {
-  }
+  const windowPath = getFinderWindowPath();
   if (windowPath) {
     await openTarget(windowPath, app);
     return;
@@ -80,7 +90,14 @@ async function openInEditor(bundleId, appName, openTarget) {
   });
 }
 function openInVSCodeNewWindow(path, app) {
-  const codePath = (0, import_node_path.join)(app.path, "Contents", "Resources", "app", "bin", "code");
+  const codePath = (0, import_node_path.join)(
+    app.path,
+    "Contents",
+    "Resources",
+    "app",
+    "bin",
+    "code"
+  );
   (0, import_node_child_process.execFileSync)(codePath, ["--new-window", path], {
     stdio: "ignore"
   });
@@ -88,5 +105,9 @@ function openInVSCodeNewWindow(path, app) {
 
 // src/open-in-vscode.ts
 async function open_in_vscode_default() {
-  await openInEditor("com.microsoft.VSCode", "Visual Studio Code", openInVSCodeNewWindow);
+  await openInEditor(
+    "com.microsoft.VSCode",
+    "Visual Studio Code",
+    openInVSCodeNewWindow
+  );
 }
