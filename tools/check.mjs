@@ -8,8 +8,8 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 const json = async (path) => JSON.parse(await readFile(join(root, path), "utf8"));
 const manifest = await json("raycast-source.json");
 
-function run(command, args, cwd = root) {
-  const result = spawnSync(command, args, { cwd, stdio: "inherit" });
+function run(command, args, cwd = root, env = process.env) {
+  const result = spawnSync(command, args, { cwd, env, stdio: "inherit" });
   if (result.error) throw result.error;
   assert.equal(result.status, 0, `${command} ${args.join(" ")} failed`);
 }
@@ -72,7 +72,9 @@ for (const extension of manifest.extensions) {
     await access(join(cwd, "assets", command.icon ?? pkg.icon));
   }
   run("pnpm", ["install", "--frozen-lockfile"], cwd);
-  run("pnpm", ["run", "lint"], cwd);
+  // Raycast 2.0.3 enables npm-only Store lockfile rules when CI=true.
+  // Our pnpm lockfile is checked by the frozen install above; keep all other lint checks.
+  run("pnpm", ["run", "lint"], cwd, { ...process.env, CI: "false" });
   const types = await readFile(join(cwd, "raycast-env.d.ts"));
   run("pnpm", ["run", "build"], cwd);
   run("pnpm", ["run", "package:local", "--check"], cwd);

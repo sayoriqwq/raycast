@@ -18,6 +18,12 @@
 检查不启动 Raycast、不控制 Finder / Chrome / 终端，也不授予权限。首次安装和 CLI 的
 manifest 验证可能访问网络。类型生成文件和 JS 都应与源码一起审阅；`dist/` 不提交。
 
+Raycast CLI 2.0.3 在 `CI=true` 时额外执行 Store 的 npm 锁文件规则，要求
+`package-lock.json` 且拒绝 `pnpm-lock.yaml`。本仓库是 pnpm 本地扩展仓库，
+因此全仓检查仅为 `ray lint` 子进程设置 `CI=false`，保留 manifest、图标、ESLint 和
+Prettier 检查；依赖一致性由前一步 `pnpm install --frozen-lockfile` 验证。
+其他安装、构建和测试继续继承 CI 环境。修改检查入口时也应以 `CI=true` 验证。
+
 ## 修改后的流程
 
 ```fish
